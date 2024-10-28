@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传文件并分析</title>
+</head>
+<body>
+    <h1>上传 Excel 文件并分析</h1>
+
+    <!-- 文件上传表单 -->
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx" required>
+        <button type="submit">上传并分析</button>
+    </form>
+
+    <!-- 如果存在图表，则显示 -->
+    {% if graph_html %}
+        <h2>分析结果</h2>
+        <div>{{ graph_html | safe }}</div>
+    {% endif %}
+</body>
+</html>
