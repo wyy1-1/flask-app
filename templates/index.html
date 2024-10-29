@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各班单选题正答率分析 - 分层对比</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .upload-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .nav-tabs {
+            font-size: 18px;
+        }
+        .graph-container {
+            margin-top: 30px;
+        }
+        .graph {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>各班单选题正答率分析 - 分层对比</h1>
+
+    <div class="upload-form">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit" class="btn btn-primary mt-2">上传文件并分析</button>
+        </form>
+    </div>
+
+    {% if graphs %}
+    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+        {% for graph in graphs %}
+        <li class="nav-item">
+            <a class="nav-link {% if loop.index0 == 0 %}active{% endif %}" 
+               id="tab-{{ loop.index0 }}" 
+               data-toggle="tab" 
+               href="#content-{{ loop.index0 }}" 
+               role="tab">
+                {{ graph.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content mt-4">
+        {% for graph in graphs %}
+        <div class="tab-pane fade {% if loop.index0 == 0 %}show active{% endif %}" 
+             id="content-{{ loop.index0 }}" role="tabpanel">
+            <div class="graph">
+                {{ graph.html | safe }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
